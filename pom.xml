@@ -3,10 +3,10 @@
   <modelVersion>4.0.0</modelVersion>
   
   <groupId>com.demo</groupId>
-  <artifactId>springBootDemo</artifactId>
+  <artifactId>springBootAuthDemo</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   
-  <name>springBootDemo Maven Webapp</name>
+  <name>springBootAuthDemo Maven Webapp</name>
   <url>http://maven.apache.org</url>
   
   <properties>
@@ -67,6 +67,22 @@
 	        <groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-eureka-server</artifactId>
 	    </dependency>
+        <!-- thmleaf模板依赖. -->  
+        <dependency>  
+            <groupId>org.springframework.boot</groupId>  
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>  
+        </dependency>  
+        <!-- shiro spring. -->  
+        <dependency>  
+            <groupId>org.apache.shiro</groupId>  
+            <artifactId>shiro-spring</artifactId>  
+            <version>1.2.3</version>  
+        </dependency>  
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>1.2.6</version>
+        </dependency>
 		<!-- <dependency>
 		    <groupId>org.mybatis</groupId>
 		    <artifactId>mybatis</artifactId>
@@ -123,7 +139,7 @@
 	</dependencyManagement>
   
   <build>
-    <finalName>springBootDemo</finalName>
+    <finalName>springBootAuthDemo</finalName>
          <resources>
         	<resource>
         		<directory>src/main/java</directory>

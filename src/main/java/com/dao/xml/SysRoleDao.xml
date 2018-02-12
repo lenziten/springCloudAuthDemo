@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dao.SysRoleDao" >
+  <resultMap id="BaseResultMap" type="com.domain.SysRole" >
+    <!-- 与数据库表字段一一对应 -->
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="role" property="role" jdbcType="VARCHAR" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="available" property="available" jdbcType="TINYINT" />
+  </resultMap>
+  <sql id="base_column">
+  	id,role,description,available
+  </sql>
+  <select id="getOne" resultType="java.lang.String">
+  	select '1'
+  </select>
+  <select id="getAll" resultMap="BaseResultMap">
+  	select 
+	<include refid="base_column"/>
+	from sys_role
+  </select>
+</mapper>
