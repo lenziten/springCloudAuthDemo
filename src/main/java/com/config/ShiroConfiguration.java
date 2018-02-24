@@ -3,6 +3,7 @@ package com.config;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.springframework.context.annotation.Bean;
@@ -29,9 +30,9 @@ public class ShiroConfiguration {
 		
 		filterChainDefinitionMap.put("/logout", "logout");
 
+		filterChainDefinitionMap.put("/userInfo/**", "perms[userInfo:*]");
+
 		filterChainDefinitionMap.put("/**", "authc");
-		
-		filterChainDefinitionMap.put("/login", "anon");
 		
 		shiroFilterFactoryBean.setLoginUrl("/login");
 		
@@ -68,6 +69,15 @@ public class ShiroConfiguration {
 		hashedCredentialsMatcher.setHashIterations(2);//散列次数,相当于md5(md5)加密了两次
 		
 		return hashedCredentialsMatcher;
+	}
+	
+	/**开启shiro aop注解支持
+	 * 使用代理方式，所以需要开启代码支持*/
+	@Bean
+	public AuthorizationAttributeSourceAdvisor authorizatinAttributeSourceAdvisor(SecurityManager securityManager){
+		AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor = new AuthorizationAttributeSourceAdvisor();
+		authorizationAttributeSourceAdvisor.setSecurityManager(securityManager);
+		return authorizationAttributeSourceAdvisor;
 	}
 
 }
