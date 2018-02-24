@@ -77,4 +77,8 @@ public class UserInfo implements Serializable {
 		this.roleList = roleList;
 	}
 	
+	public String getCredentialsSalt(){
+		return this.username +this.salt;
+	}
+	
 }

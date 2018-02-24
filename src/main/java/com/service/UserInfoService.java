@@ -9,4 +9,6 @@ public interface UserInfoService {
 	String getOne();
 	
 	List<UserInfo> getAll();
+	
+	public UserInfo findByUsername(String username);
 }

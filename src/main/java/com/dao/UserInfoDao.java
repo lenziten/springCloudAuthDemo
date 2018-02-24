@@ -9,4 +9,6 @@ public interface UserInfoDao {
 	String getOne();
 
 	List<UserInfo> getAll();
+	
+	UserInfo findByUsername(String username);
 }
