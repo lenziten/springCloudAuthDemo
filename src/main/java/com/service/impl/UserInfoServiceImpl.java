@@ -31,4 +31,14 @@ public class UserInfoServiceImpl implements UserInfoService {
 		return userInfoDao.findByUsername(username);
 	}
 
+	@Override
+	public List<UserInfo> getAllJoinRole() {
+		return userInfoDao.getAllJoinRole();
+	}
+
+	@Override
+	public List<UserInfo> selectA() {
+		return userInfoDao.selectA();
+	}
+
 }

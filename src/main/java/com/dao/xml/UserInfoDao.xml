@@ -17,9 +17,42 @@
     	<result column="available" property="available" jdbcType="TINYINT"/>
     </collection>
   </resultMap>
+  <resultMap id="JoinResultMap" type="com.domain.UserInfo" >
+    <!-- 与数据库表字段一一对应 -->
+    <id column="uid" property="uid" jdbcType="INTEGER" />
+    <result column="username" property="username" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="password" property="password" jdbcType="VARCHAR" />
+    <result column="salt" property="salt" jdbcType="VARCHAR" />
+    <result column="state" property="state" jdbcType="SMALLINT" />
+    <collection property="roleList" column="uid" 
+    javaType="ArrayList" ofType="com.domain.SysRole"
+    select="selectB"/>
+  </resultMap>
   <sql id="base_column">
   	uid,username,name,password,salt,state
   </sql>
+  <sql id="join_column">
+  	user.uid,user.username,user.name,user.password,user.salt,user.state
+  </sql>
+  
+  <select id="selectA" resultMap="JoinResultMap">
+  	select 
+  	uid,username,name,password,salt,state
+  	from user_info
+  </select>
+  
+  <select id="selectB" parameterType="java.lang.String" resultMap="com.dao.SysRoleDao.JoinResultMap">
+  	select
+  	<include refid="com.dao.SysRoleDao.join_column"/>,
+  	<include refid="com.dao.SysPermissionDao.join_column"/>
+  	from sys_user_role ur
+  	left join sys_role role on ur.role_id = role.id
+	left join sys_role_permission rp on role.id = rp.role_id
+	left join sys_permission perm on rp.permission_id = perm.id
+  	where ur.uid = #{uid}
+  </select>
+  
   <select id="getOne" resultType="java.lang.String">
   	select '1'
   </select>
@@ -28,10 +61,24 @@
 	<include refid="base_column"/>
 	from user_info
   </select>
-  <select id="findByUsername" parameterType="java.lang.String" resultMap="BaseResultMap">
-  select
-	<include refid="base_column"/>
-	from user_info
-  	where username = #{username}
+  <select id="findByUsername" parameterType="java.lang.String" resultMap="JoinResultMap">
+  	<!-- select 
+		<include refid="join_column"/>,
+		<include refid="com.dao.SysRoleDao.join_column"/>
+	from user_info user
+	left join sys_user_role ur on user.uid = ur.uid
+	left join sys_role role on ur.role_id = role.id -->
+	select 
+  	<include refid="join_column"/>
+  	from user_info user
+  	where user.username = #{username}
+  </select>
+  <select id="getAllJoinRole" resultMap="BaseResultMap">
+  	select 
+		<include refid="join_column"/>,
+		<include refid="com.dao.SysRoleDao.join_column"/>
+	from user_info user
+	left join sys_user_role ur on user.uid = ur.uid
+	left join sys_role role on ur.role_id = role.id
   </select>
 </mapper>

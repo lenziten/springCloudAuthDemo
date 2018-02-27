@@ -1,5 +1,7 @@
 package com.shiro;
 
+import java.util.List;
+
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -11,6 +13,7 @@ import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.util.ByteSource;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.domain.SysPermission;
 import com.domain.SysRole;
@@ -47,10 +50,11 @@ public class MyShiroRealm extends AuthorizingRealm{
 	@Override
 	protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
 		System.out.println("MyShiroRealm.doGetAuthenticationInfo()");
-		
 		//获取用户的输入账号
 		String username = (String) token.getPrincipal();
 		System.out.println(token.getCredentials());
+		List<UserInfo> a = userInfoService.selectA();
+		System.out.println(JSONArray.toJSONString(a));
 		//通过username从数据库中查找user对象
 		UserInfo userInfo = userInfoService.findByUsername(username);
 		System.out.println("---->>userInfo="+JSONObject.toJSONString(userInfo));

@@ -11,4 +11,8 @@ public interface UserInfoService {
 	List<UserInfo> getAll();
 	
 	public UserInfo findByUsername(String username);
+	
+	public List<UserInfo> getAllJoinRole();
+	
+	public List<UserInfo> selectA();
 }

@@ -11,4 +11,8 @@ public interface UserInfoDao {
 	List<UserInfo> getAll();
 	
 	UserInfo findByUsername(String username);
+	
+	List<UserInfo> getAllJoinRole();
+	
+	List<UserInfo> selectA();
 }

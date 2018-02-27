@@ -30,7 +30,7 @@ public class ShiroConfiguration {
 		
 		filterChainDefinitionMap.put("/logout", "logout");
 
-		filterChainDefinitionMap.put("/userInfo/**", "perms[userInfo:*]");
+		filterChainDefinitionMap.put("/userInfo/**", "authc,perms[userInfo:view]");
 
 		filterChainDefinitionMap.put("/**", "authc");
 		

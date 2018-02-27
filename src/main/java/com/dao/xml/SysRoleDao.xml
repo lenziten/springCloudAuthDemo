@@ -8,8 +8,28 @@
     <result column="description" property="description" jdbcType="VARCHAR" />
     <result column="available" property="available" jdbcType="TINYINT" />
   </resultMap>
+  <resultMap id="JoinResultMap" type="com.domain.SysRole" >
+    <!-- 与数据库表字段一一对应 -->
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="role" property="role" jdbcType="VARCHAR" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="available" property="available" jdbcType="TINYINT" />
+    <collection property="permissions" javaType="ArrayList" ofType="com.domain.SysPermission">
+    	<id column="id" property="id" jdbcType="INTEGER" />
+	    <result column="name" property="name" jdbcType="VARCHAR" />
+	    <result column="resource_type" property="resourceType" jdbcType="VARCHAR" />
+	    <result column="url" property="url" jdbcType="VARCHAR" />
+	    <result column="permission" property="permission" jdbcType="VARCHAR" />
+	    <result column="parent_id" property="parentId" jdbcType="INTEGER" />
+	    <result column="parent_ids" property="parentIds" jdbcType="VARCHAR" />
+	    <result column="available" property="available" jdbcType="TINYINT" />
+    </collection>
+  </resultMap>
   <sql id="base_column">
   	id,role,description,available
+  </sql>
+  <sql id="join_column">
+  	role.id,role.role,role.description,role.available
   </sql>
   <select id="getOne" resultType="java.lang.String">
   	select '1'

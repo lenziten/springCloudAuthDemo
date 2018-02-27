@@ -12,8 +12,28 @@
     <result column="parent_ids" property="parentIds" jdbcType="VARCHAR" />
     <result column="available" property="available" jdbcType="TINYINT" />
   </resultMap>
+  <resultMap id="JoinResultMap" type="com.domain.SysPermission" >
+    <!-- 与数据库表字段一一对应 -->
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="resource_type" property="resourceType" jdbcType="VARCHAR" />
+    <result column="url" property="url" jdbcType="VARCHAR" />
+    <result column="permission" property="permission" jdbcType="VARCHAR" />
+    <result column="parent_id" property="parentId" jdbcType="INTEGER" />
+    <result column="parent_ids" property="parentIds" jdbcType="VARCHAR" />
+    <result column="available" property="available" jdbcType="TINYINT" />
+    <collection property="roles" javaType="ArrayList" ofType="com.domain.SysRole">
+    	<id column="id" property="id" jdbcType="INTEGER" />
+    	<result column="role" property="role" jdbcType="VARCHAR"/>
+    	<result column="description" property="description" jdbcType="VARCHAR"/>
+    	<result column="available" property="available" jdbcType="TINYINT"/>
+    </collection>
+  </resultMap>
   <sql id="base_column">
   	id,name,resource_type,url,permission,parent_id,parent_ids,available
+  </sql>
+  <sql id="join_column">
+  	perm.id,perm.name,perm.resource_type,perm.url,perm.permission,perm.parent_id,perm.parent_ids,perm.available
   </sql>
   <select id="getOne" resultType="java.lang.String">
   	select '1'
@@ -22,5 +42,13 @@
   	select 
   	<include refid="base_column"/>
   	from sys_permission
+  </select>
+  <select id="getAllJoinPermission" resultMap="BaseResultMap">
+  	select 
+  	<include refid="join_column"/>,
+  	<include refid="com.dao.SysRoleDao.join_column"/>
+  	from sys_permission perm
+	left join sys_role_permission rp on perm.id = rp.permission_id
+	left join sys_role role on rp.role_id = role.id
   </select>
 </mapper>
